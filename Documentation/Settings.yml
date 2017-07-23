@@ -11,13 +11,16 @@ conf.py:
   copyright: 2017
   project: extra salt
   version: 0.1
-  release: 0.1.2
+  release: 0.1.4
   intersphinx_mapping:
     t3tsref:
     - http://docs.typo3.org/typo3cms/TyposcriptReference/
     - null
     saltedpasswords:
     - http://docs.typo3.org/typo3cms/extensions/saltedpasswords/
+    - null
+    external_import:
+    - https://docs.typo3.org/typo3cms/extensions/external_import/
     - null
   latex_documents:
   - - Index
