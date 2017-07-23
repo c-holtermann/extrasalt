@@ -16,9 +16,11 @@ namespace CHoltermann\Extrasalt;
 
 /**
  * Class that implements Blowfish salted hashing based on PHP's
- * crypt() function.
+ * crypt() function for php > 5.3.7 for hashes starting with $2y$
  *
- * Credits to http://www.techrepublic.com/blog/australian-technology/securing-passwords-with-blowfish/
+ * Credits to 
+ * http://www.techrepublic.com/blog/australian-technology/securing-passwords-with-blowfish/
+ * http://www.php.net/security/crypt_blowfish.php
  *
  * @author Christoph Holtermann <mail@c-holtermann.net>
  */
@@ -115,14 +117,18 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 	}
         
         /**
-         * Returns whether all prequesites for the hashing methods are matched
+         * Returns whether all prerequisites for the hashing methods are matched
 	 *
-	 * @ToDo implement
+	 * @ToDo Does this method ever get called ?
+	 * @ToDo Further conditions to check ?
          * @return boolean Method available
          */
         public function isAvailable()
 	{
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isAvailable', $this->identKey, -1);
+		$returnValue = parent::isAvailable()
+			&& version_compare(phpversion(), '5.3.7', '>');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isAvailable: '.$returnValue, $this->identKey, -1);
+		return $returnValue;
 	}
         
         /**
