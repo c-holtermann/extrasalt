@@ -42,19 +42,25 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	/**
 	* @test
 	*/
-	public function blowfishHashIsCorrectlyIdentified() {
+	public function validBlowfishHashIsAccepted() {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
 		$this->assertTrue($blowfishInstance->isValidSalt(self::blowfishSaltPassword1));
-		// $this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltInvalid1));
-		// $this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltInvalid2));
-		// $this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltInvalid3));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
+	}
+
+	/**
+	* @test
+	*/
+	public function invalidBlowfishHashIsRejected() {
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
+		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
 		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPasswordInvalid1));
 		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPasswordInvalid2));
 		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPasswordInvalid3));
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
-	}
-	
+	}	
+
 	/**
 	* @test
 	*/
