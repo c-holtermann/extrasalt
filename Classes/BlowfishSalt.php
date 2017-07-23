@@ -117,7 +117,7 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 	}
         
         /**
-         * Returns whether all prerequisites for the hashing methods are matched
+         * Returns whether all prerequisites for the hashing methods are fulfilled
 	 *
 	 * @ToDo Does this method ever get called ?
 	 * @ToDo Further conditions to check ?
@@ -125,10 +125,10 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
          */
         public function isAvailable()
 	{
-		$returnValue = parent::isAvailable()
-			&& version_compare(phpversion(), '5.3.7', '>');
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isAvailable: '.$returnValue, $this->identKey, -1);
-		return $returnValue;
+		$returnValue1 = version_compare(phpversion(), '5.3.7', '>');
+		if (function_exists('parent::isAvailable')) { $returnValue2 = parent::isAvailable(); } else $returnValue2 = TRUE;
+		
+		return $returnValue1 && $returnValue2;
 	}
         
         /**

@@ -38,7 +38,18 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 		$this->assertInstanceOf('\\TYPO3\\CMS\\Saltedpasswords\\Salt\\SaltInterface', $blowfishInstance);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
 	}
-	
+
+	/**
+	* @test
+	*/
+	public function blowfishSaltIsAvailable() {
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
+		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
+		$this->assertTrue($blowfishInstance->isAvailable());
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
+	}
+
+
 	/**
 	* @test
 	*/
