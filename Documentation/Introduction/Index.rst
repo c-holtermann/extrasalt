@@ -50,4 +50,9 @@ Screenshots
 
    Example user data.
 
-   This is example user data
+Motivation and History
+----------------------
+
+Importing password userdata (using extension :ref:`external import <external_import:start>`) from `Admidio <https://www.admidio.org/>`_ stopped working for me at some point of time.
+I tried to figure out what went wrong and put the results of my examination into this extension which works for my
+specific case. If it's useful for anyone else, feel free to use at your own risk.
