@@ -14,6 +14,8 @@ namespace CHoltermann\Extrasalt;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\MathUtility;
+
 /**
  * Class that implements Blowfish salted hashing based on PHP's
  * crypt() function for php > 5.3.7 for hashes starting with $2y$
@@ -107,12 +109,10 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
         /**
          * Returns length of required salt.
 	 *
-	 * @ToDo remove debug log
          * @return integer Length of required salt
          */
         public function getSaltLength()
 	{
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt getSaltLength: '.self::$saltLengthBlowfish, $this->identKey, -1);
 		return self::$saltLengthBlowfish;
 	}
         
@@ -173,7 +173,18 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 		$prefixBlowfish = $this->getSetting();
 		if (!strncmp($hash, $prefixBlowfish, strlen($prefixBlowfish))) {return TRUE;} else {return FALSE;}
 	}
-	
+
+	/**
+        * @see https://github.com/php/php-src/blob/php-7.0.7/ext/standard/password.c#L286
+	* @see https://review.typo3.org/gitweb?p=Packages/TYPO3.CMS.git;a=blob;f=typo3/sysext/saltedpasswords/Classes/Salt/PhpPasswordHashBcryptSalt.php;h=e8b6a7c8a2d0ef8438c5af97b2c5555e129e4a25;hb=4f9192eee5ef45997c67670dfb286ab018f7e71f
+        * @param mixed $cost
+        * @return bool
+        */
+        protected function isValidBcryptCost($cost)
+        {
+		return !\is_bool($cost) && (\is_int($cost) || MathUtility::canBeInterpretedAsInteger($cost)) && $cost >= 4 && $cost <= 31;
+        }
+
 	/**
 	 * Method returns cost parameter of Blowfish Hash
 	 *
@@ -190,6 +201,11 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 		{
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt hashGetCostBlowfish validCostRegion', $this->identKey, -1);
 			$costBlowfish = substr($costBlowfishRegion, 1, 2);
+			if ($costBlowfish)
+			{
+				$validCost = $this->isValidBcryptCost($costBlowfish);
+				if (!$validCost) { $costBlowfish = FALSE; }
+			}
 		}
 		return $costBlowfish;
 	}
@@ -222,9 +238,13 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 	{
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt', $this->identKey, -1);
 		$isValid = FALSE;
-		$reqLenBase64 = $this->getLengthBase64FromBytes($this->getSaltLength());
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt reqLenBase64: '.$reqLenBase64, $this->identKey, -1);
-		if (strlen($salt) >= $reqLenBase64) {
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt strlen($salt): '.strlen($salt), $this->identKey, -1);
+		$reqLenBase64Salt = $this->getLengthBase64FromBytes($this->getSaltLength());
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt reqLenBase64: '.$reqLenBase64Salt, $this->identKey, -1);
+		$lenSettingRegion = strlen($this->getSetting());
+		$reqLen = $lenSettingRegion + $lenCostRegion + $reqLenBase64Salt;
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt reqLen: '.$reqLen, $this->identKey, -1);
+		if (strlen($salt) >= $reqLen) {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt reqLenBase64 ok', $this->identKey, -1);
 			if ($this->hashHasPrefixBlowfish($salt)) {
 				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt hashHasPrefixBlowfish ok', $this->identKey, -1);

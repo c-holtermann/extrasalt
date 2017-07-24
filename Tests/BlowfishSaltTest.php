@@ -21,6 +21,8 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	* @test
 	*/
 	public function blowfishSaltHasBeenRegistered() {
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$availableClasses = TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getRegisteredSaltedHashingMethods();
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('availableClasses', self::identKey, -1, $availableClasses);
