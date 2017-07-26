@@ -68,7 +68,26 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
          */
         protected function getGeneratedSalt()
 	{}
-        
+
+	/**
+         * Generates a random base salt for the hash.
+         *
+         * @return string A string containing a random salt
+         */
+        public function getRandomSalt()
+	{
+		$saltLength = $this->getSaltLength();
+		$salt = "";
+		$randomBytes = openssl_random_pseudo_bytes($saltLength);
+		$itoa64 = $this->getItoa64();
+		for ($i=1; $i<=$saltLength; $i++)
+		{
+			$randomByte64 = ord($randomBytes[$i-1]) % 64;
+			$salt .= $itoa64[$randomByte64];
+		}
+		return $salt;
+	}
+   
         /**
          * Returns a string for mapping an int to the corresponding base 64 character.
          *
@@ -223,14 +242,14 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 		$prefixBlowfish = $this->getSetting();
 		$lengthPrefixBlowfish = strlen($prefixBlowfish);
 		$lengthCostBlowfish = 3;
-		$saltBlowfish = substr($hash, $lengthPrefixBlowfish+$lengthCostBlowfish);
+		$saltBlowfish = substr($hash, $lengthPrefixBlowfish + $lengthCostBlowfish);
 		return $saltBlowfish;
 	}
 
         /**
          * Method determines if a given string is a valid salt
 	 *
-	 * @ToDo implement
+	 * @ToDo clean up debug messages
          * @param string $salt String to check
          * @return boolean TRUE if it's valid salt, otherwise FALSE
          */
