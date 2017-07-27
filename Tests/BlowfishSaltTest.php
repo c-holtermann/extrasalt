@@ -96,5 +96,17 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 		$this->assertTrue(strlen($salt)==22);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
 	}
+
+	/**
+	* @test
+	*/
+	public function blowfishGenerateRandomSaltWithSettings() {
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
+		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
+		$salt = $blowfishInstance->getGeneratedSalt();
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog("salt: ".$salt, self::identKey, -1);
+		$this->assertTrue($blowfishInstance->isValidSalt($salt));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
+	}
 	
 }

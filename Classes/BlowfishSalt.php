@@ -52,22 +52,35 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
         static protected $saltLengthBlowfish = 22;
 
 	/**
-         * Method applies settings (prefix, optional hash count, optional suffix)
+         * Keeps standard cost of Blowfish hashes
+         *
+         * @var integer
+         */
+        static protected $costBlowfish = 14;
+
+	/**
+         * Method applies settings (prefix, hash count, optional suffix)
          * to a salt.
          *
          * @param string $salt A salt to apply setting to
          * @return string Salt with setting
          */
         protected function applySettingsToSalt($salt)
-	{}
+	{
+		return $this->getSetting().$this->getCost()."$".$salt;	
+	}
         
         /**
          * Generates a random base salt settings for the hash.
          *
          * @return string A string containing settings and a random salt
          */
-        protected function getGeneratedSalt()
-	{}
+        public function getGeneratedSalt()
+	{
+		$randomSalt = $this->getRandomSalt();
+		$hash = $this->applySettingsToSalt($randomSalt);
+		return $hash;
+	}
 
 	/**
          * Generates a random base salt for the hash.
@@ -106,6 +119,15 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
         public function getSetting() {
                 return self::$settingBlowfish;
         }
+
+	/**
+         * Returns standard cost for Blowfish salted hashes.
+         *
+         * @return int standard cost for Blowfish salted hashes
+         */
+        public function getCost() {
+                return self::$costBlowfish;
+        }	
 
 	/**
          * Method checks if a given plaintext password is correct by comparing it with
@@ -250,6 +272,7 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
          * Method determines if a given string is a valid salt
 	 *
 	 * @ToDo clean up debug messages
+	 * @ToDo Should this function accept empty salts ? Without password included ? If so at the moment it doesn't. Length calculation is broken. Test fails.
          * @param string $salt String to check
          * @return boolean TRUE if it's valid salt, otherwise FALSE
          */
