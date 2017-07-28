@@ -124,4 +124,48 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
 	}
 	
+	/**
+	* @test
+	*/
+	public function blowfishGeneratePassword() {
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
+		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
+		$password = "testpassword1234";	
+		$saltedPassword = $blowfishInstance->getHashedPassword($password);
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog("password: $password -> ".$saltedPassword, self::identKey, -1);
+		$this->assertTrue($blowfishInstance->isValidSalt($saltedPassword));
+		$this->assertTrue($blowfishInstance->checkPassword($password, $saltedPassword));
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
+	}
+
+	/**
+	* @see https://stackoverflow.com/questions/6101956/generating-a-random-password-in-php/31284266#31284266
+	**/
+	function insecureRandomPassword($length=8) {
+    		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    		$pass = array(); //remember to declare $pass as an array
+    		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    		for ($i = 0; $i < $length; $i++) {
+        		$n = rand(0, $alphaLength);
+        		$pass[] = $alphabet[$n];
+    		}
+    		return implode($pass); //turn the array into a string
+	}
+
+	/**
+	* @test
+	*/
+	public function blowfishGenerate20RandomPasswords() {
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
+		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
+		for ($i=0; $i<20; $i++)
+		{
+			$password = $this->insecureRandomPassword(8);	
+			$saltedPassword = $blowfishInstance->getHashedPassword($password);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog("password($i): $password -> ".$saltedPassword, self::identKey, -1);
+			$this->assertTrue($blowfishInstance->isValidSalt($saltedPassword));
+			$this->assertTrue($blowfishInstance->checkPassword($password, $saltedPassword));
+		}
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
+	}
 }

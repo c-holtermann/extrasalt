@@ -186,14 +186,22 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
         /**
          * Method creates a salted hash for a given plaintext password
 	 *
-	 * @ToDo implement
          * @param string $password Plaintext password to create a salted hash from
          * @param string $salt Optional custom salt to use
          * @return string Salted hashed password
          */
         public function getHashedPassword($password, $salt = NULL)
 	{
-		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt getHashedPassword', $this->identKey, -1);
+		$saltedPW = NULL;
+	        if (!empty($password)) 
+		{
+            		if (empty($salt)) { $salt = $this->getGeneratedSalt(); }
+			if ($this->isValidSalt($salt)) {
+				$saltedPW = crypt($password, $salt);	
+			}
+        	}
+		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt getHashedPassword: '.$saltedPW, $this->identKey, -1);
+        	return $saltedPW;
 	}
         
         /**
