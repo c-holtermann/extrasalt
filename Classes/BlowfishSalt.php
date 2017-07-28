@@ -46,10 +46,11 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 
 	/**
          * Keeps length of a Blowfish salt in bytes.
+	 * 16 bytes will lead to 22 chars
          *
          * @var integer
          */
-        static protected $saltLengthBlowfish = 22;
+        static protected $saltLengthBlowfish = 16;
 
 	/**
          * Keeps standard cost of Blowfish hashes
@@ -89,7 +90,7 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
          */
         public function getRandomSalt()
 	{
-		$saltLength = $this->getSaltLength();
+		$saltLength = $this->getSaltLengthChars();
 		$salt = "";
 		$randomBytes = openssl_random_pseudo_bytes($saltLength);
 		$itoa64 = $this->getItoa64();
@@ -148,13 +149,23 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 	}
         
         /**
-         * Returns length of required salt.
+         * Returns length of required salt in bytes.
 	 *
-         * @return integer Length of required salt
+         * @return integer Length of required salt in bytes
          */
         public function getSaltLength()
 	{
 		return self::$saltLengthBlowfish;
+	}
+
+	/**
+         * Returns length of required salt in chars.
+	 *
+         * @return integer Length of required salt in chars
+         */
+        public function getSaltLengthChars()
+	{
+		return $this->getLengthBase64FromBytes($this->getSaltLength());
 	}
         
         /**
@@ -281,7 +292,7 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt', $this->identKey, -1);
 		$isValid = FALSE;
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt strlen($salt): '.strlen($salt), $this->identKey, -1);
-		$reqLenBase64Salt = $this->getLengthBase64FromBytes($this->getSaltLength());
+		$reqLenBase64Salt = $this->getSaltLengthChars();
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('BlowFishSalt isValidSalt reqLenBase64: '.$reqLenBase64Salt, $this->identKey, -1);
 		$lenSettingRegion = strlen($this->getSetting());
 		$reqLen = $lenSettingRegion + $lenCostRegion + $reqLenBase64Salt;
