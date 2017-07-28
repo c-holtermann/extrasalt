@@ -59,6 +59,10 @@ Limitations
   
 * No configuration.
 
+Thoughts
+--------
+
+* How should TYPO3 react if an invalid salted password is found in the database ?
 
 Motivation and History
 ----------------------
