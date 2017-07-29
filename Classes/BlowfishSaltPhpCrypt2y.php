@@ -27,9 +27,9 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  * @author Christoph Holtermann <mail@c-holtermann.net>
  */
 
-class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implements \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface {
+class BlowfishSaltPhpCrypt2y extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implements \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface {
 
-	const identKey = "CHoltermann\Extrasalt\BlowfishSalt";
+	const identKey = "CHoltermann\Extrasalt\BlowfishSaltPhpCrypt2y";
 
 	/**
 	 * Keeps a string for mapping an int to the corresponding
@@ -291,7 +291,6 @@ class BlowfishSalt extends \TYPO3\CMS\Saltedpasswords\Salt\AbstractSalt implemen
          * Method determines if a given string is a valid salt
 	 *
 	 * @ToDo clean up debug messages
-	 * @ToDo Should this function accept empty salts ? Without password included ? If so at the moment it doesn't. Length calculation is broken. Test fails.
          * @param string $salt String to check
          * @return boolean TRUE if it's valid salt, otherwise FALSE
          */

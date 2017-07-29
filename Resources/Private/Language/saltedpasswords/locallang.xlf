@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-07-29T21:20:00Z" product-name="extrasalt">
+	<header/>
+	<body>
+		<trans-unit id="ext.saltedpasswords.title.blowfishsaltphpcrypt2y">
+			<source>Blowfish salted hashing using php (>5.3.7) crypt (advanced) [extrasalt]</source>
+		</trans-unit>
+	</body>	
+</file>
+</xliff>

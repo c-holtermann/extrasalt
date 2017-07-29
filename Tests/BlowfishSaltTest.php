@@ -1,26 +1,26 @@
 <?php
 
-class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
+class BlowfishSaltPhpCrypt2yTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 
-	const identKey = 'BlowfishSaltTest';
+	const identKey = 'BlowfishSaltPhpCrypt2yTest';
 	
-	const classnameBlowfish = 'CHoltermann\Extrasalt\BlowfishSalt';
+	const classnameBlowfish = 'CHoltermann\Extrasalt\BlowfishSaltPhpCrypt2y';
 
-	const blowfishSalt1 = '$2y$14$ZADNl.UOPmN.LN/i/shXco';
-	const blowfishSaltInvalid1 = '$2a$14$ZADNl.UOPmN.LN/i/shXco';
-	const blowfishSaltInvalid2 = '$2y!14$ZADNl.UOPmN.LN/i/shXco';
-	const blowfishSaltInvalid3 = '$2y$14$ZADNl!UOPmN.LN/i/shXco';
+	const blowfishSaltPhpCrypt2y1 = '$2y$14$ZADNl.UOPmN.LN/i/shXco';
+	const blowfishSaltPhpCrypt2yInvalid1 = '$2a$14$ZADNl.UOPmN.LN/i/shXco';
+	const blowfishSaltPhpCrypt2yInvalid2 = '$2y!14$ZADNl.UOPmN.LN/i/shXco';
+	const blowfishSaltPhpCrypt2yInvalid3 = '$2y$14$ZADNl!UOPmN.LN/i/shXco';
 	const blowfishPassword1 = 'sausage';
-	const blowfishSaltPassword1 = '$2y$14$ZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
-	const blowfishSaltPasswordInvalid1 = '$2a$14$ZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
-	const blowfishSaltPasswordInvalid2 = '$2y$14AZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
-	const blowfishSaltPasswordInvalid3 = '$2y$14$ZADNl.UOPmN.LN/i!shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
+	const blowfishSaltPhpCrypt2yPassword1 = '$2y$14$ZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
+	const blowfishSaltPhpCrypt2yPasswordInvalid1 = '$2a$14$ZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
+	const blowfishSaltPhpCrypt2yPasswordInvalid2 = '$2y$14AZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
+	const blowfishSaltPhpCrypt2yPasswordInvalid3 = '$2y$14$ZADNl.UOPmN.LN/i!shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq';
 	const blowfishPassword2 = 'spam';
 
 	/**
 	* @test
 	*/
-	public function blowfishSaltHasBeenRegistered() {
+	public function blowfishSaltPhpCrypt2yHasBeenRegistered() {
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
@@ -34,7 +34,7 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	/**
 	* @test
 	*/
-	public function anInstanceOfBlowfishSaltCanBeConstructed() {
+	public function anInstanceOfBlowfishSaltPhpCrypt2yCanBeConstructed() {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
 		$this->assertInstanceOf('\\TYPO3\\CMS\\Saltedpasswords\\Salt\\SaltInterface', $blowfishInstance);
@@ -44,7 +44,7 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	/**
 	* @test
 	*/
-	public function blowfishSaltIsAvailable() {
+	public function blowfishSaltPhpCrypt2yIsAvailable() {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
 		$this->assertTrue($blowfishInstance->isAvailable());
@@ -58,7 +58,7 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	public function validBlowfishHashIsAccepted() {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
-		$this->assertTrue($blowfishInstance->isValidSalt(self::blowfishSaltPassword1));
+		$this->assertTrue($blowfishInstance->isValidSalt(self::blowfishSaltPhpCrypt2yPassword1));
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
 	}
 
@@ -68,9 +68,9 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	public function invalidBlowfishHashIsRejected() {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
-		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPasswordInvalid1));
-		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPasswordInvalid2));
-		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPasswordInvalid3));
+		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPhpCrypt2yPasswordInvalid1));
+		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPhpCrypt2yPasswordInvalid2));
+		$this->assertTrue(!$blowfishInstance->isValidSalt(self::blowfishSaltPhpCrypt2yPasswordInvalid3));
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
 	}	
 
@@ -80,8 +80,8 @@ class BlowfishSaltTest extends \TYPO3\CMS\Core\Tests\BaseTestCase {
 	public function blowfishPasswordIsCorrectlyIdentified() {
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." START", self::identKey, -1);
 		$blowfishInstance = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj(self::classnameBlowfish);
-		$this->assertTrue($blowfishInstance->checkPassword(self::blowfishPassword1, self::blowfishSaltPassword1));
-		$this->assertTrue(!$blowfishInstance->checkPassword(self::blowfishPassword2, self::blowfishSaltPassword1));
+		$this->assertTrue($blowfishInstance->checkPassword(self::blowfishPassword1, self::blowfishSaltPhpCrypt2yPassword1));
+		$this->assertTrue(!$blowfishInstance->checkPassword(self::blowfishPassword2, self::blowfishSaltPhpCrypt2yPassword1));
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(__METHOD__." END", self::identKey, -1);
 	}
 
