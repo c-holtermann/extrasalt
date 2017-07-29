@@ -21,4 +21,4 @@ Links
 	https://github.com/c-holtermann/extrasalt
 
 :Contact:
-	`@<username> <https://twitter.com/your-username>`__
+	mail@c-holtermann.net
