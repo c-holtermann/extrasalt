@@ -11,4 +11,6 @@
 Configuration Reference
 =======================
 
-No configuration yet.
+In the extension manager go to configuration of system extension salted passwords. You will find an additional salting method:
+
+* Blowfish salted hashing using php (>5.3.7) crypt (advanced) [extrasalt]
