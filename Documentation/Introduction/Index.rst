@@ -50,15 +50,6 @@ Screenshots
 
    Example user data.
 
-Limitations
------------
-
-* At the moment only checking for valid hashes is being done. If someone logs in using an imported blowfish hash the password is being rehashed using the standard salting scheme. 
-  
-* This extension does no encoding yet. 
-  
-* No configuration.
-
 Thoughts
 --------
 

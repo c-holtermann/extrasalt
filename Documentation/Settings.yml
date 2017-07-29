@@ -11,7 +11,7 @@ conf.py:
   copyright: 2017
   project: extra salt
   version: 0.1
-  release: 0.1.5
+  release: 0.1.6
   intersphinx_mapping:
     t3tsref:
     - http://docs.typo3.org/typo3cms/TyposcriptReference/
@@ -26,7 +26,7 @@ conf.py:
   - - Index
     - extrasalt.tex
     - extra salt
-    - 
+    - Christoph Holtermann 
     - manual
   latex_elements:
     papersize: a4paper
