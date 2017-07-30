@@ -33,8 +33,10 @@ extra salt
 
 	:Author:
 		C. Holtermann
+
 	:Email:
 		mail@c-holtermann.net
+
 	:License:
 		This document is published under the Open Content License
 		available from http://www.opencontent.org/opl.shtml
