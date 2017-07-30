@@ -13,11 +13,24 @@ Developer Corner
 
 Target group: **Developers**
 
+Salting methods:
+----------------
+
++-----------------+------------------+-------------------------------------------------------------------------+
+| Provided by     | Hash starts with | Example Hash                                                            |
++=================+==================+=========================================================================+
+| saltedpasswords | $2a$             |                                                                         |
++-----------------+------------------+-------------------------------------------------------------------------+
+| extrasalt       | $2y$             | $2y$14$ZADNl.UOPmN.LN/i/shXceDQw/nWwqWg8/QG26//TdAiawjyrxYgq            |
++-----------------+------------------+-------------------------------------------------------------------------+
+
+
 Further Information:
+--------------------
 
 * Feature #79795: https://forge.typo3.org/issues/79795
 
-  this feature may already provide the functionality this extension brings
+  this feature probably resolves the issue this extension was written for
 
 Thoughts and Questions
 ----------------------
