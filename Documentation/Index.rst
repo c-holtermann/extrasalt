@@ -23,10 +23,10 @@ extra salt
 		en
 
 	:Description:
-		Additional salting methods for salted passwords
+		Additional salting methods for system extension salted passwords (php (>5.3.7) blowfish crypt, "$2y$")
 
 	:Keywords:
-		comma,separated,list,of,keywords
+		password,salt,hash
 
 	:Copyright:
 		2017
@@ -57,4 +57,5 @@ extra salt
 	Developer/Index
 	KnownProblems/Index
 	ToDoList/Index
+	Credits/Index
 	Links

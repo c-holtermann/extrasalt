@@ -33,6 +33,6 @@ conf.py:
     pointsize: 10pt
     preamble: \usepackage
   html_theme_options:
-    github_repository: TYPO3-Documentation/TYPO3CMS-Example-ExtensionManual
+    github_repository: c-holtermann/extrasalt
     github_branch: latest
 ...
