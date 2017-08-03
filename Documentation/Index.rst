@@ -26,7 +26,7 @@ extra salt
 		Additional salting methods for system extension salted passwords (php (>5.3.7) blowfish crypt, "$2y$")
 
 	:Keywords:
-		password,salt,hash
+		password,salt,hash,userdata,encrypt
 
 	:Copyright:
 		2017
